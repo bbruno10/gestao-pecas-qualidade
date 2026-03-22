@@ -1,7 +1,7 @@
 """
 Desafio de Automação Digital: Gestão de Peças, Qualidade e Armazenamento
 Disciplina: Algoritmos e Lógica de Programação - UNIFECAF
-Autor: Bruno (Spring School Limeira)
+Autor: Bruno Brandao
 
 Sistema de controle de produção e qualidade de peças industriais.
 Critérios de aprovação:
