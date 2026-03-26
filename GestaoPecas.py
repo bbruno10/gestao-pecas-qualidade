@@ -285,3 +285,16 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
+    
+    
+    
+# ───────       VARIÁVEIS DE LOOP (letras curtas usadas dentro de for)     ────────
+#
+#  p         → Representa uma peça durante o loop (atalho para "peça")
+#  m         → Representa um motivo de reprovação durante o loop (atalho para "motivo")
+#  i         → Índice (posição) do item na lista durante o loop
+#  j         → Índice (posição) usado no segundo loop (dentro do primeiro)
+#  pc        → Representa uma peça da caixa atual durante o loop (atalho para "peça da caixa")
+#  item      → Representa um registro de peça reprovada (contém a peça e os motivos)
+#  caixa     → Representa uma caixa fechada durante o loop
