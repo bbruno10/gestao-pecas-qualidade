@@ -71,12 +71,12 @@ def cadastrar_peca():
         return
 
     # Verificar ID duplicado
-    for p in pecas_aprovadas:
-        if p["id"] == id_peca:
+    for peca_cadastrada_aprovada in pecas_aprovadas:
+        if peca_cadastrada_aprovada["id"] == id_peca:
             print(f"Já existe uma peça aprovada com o ID '{id_peca}'.")
             return
-    for item in pecas_reprovadas:
-        if item["peca"]["id"] == id_peca:
+    for registro_cadastro in pecas_reprovadas:
+        if registro_cadastro["peca"]["id"] == id_peca:
             print(f"Já existe uma peça reprovada com o ID '{id_peca}'.")
             return
 
@@ -117,8 +117,8 @@ def cadastrar_peca():
         pecas_reprovadas.append({"peca": peca, "motivos": motivos})
         print(f"\n Peça '{id_peca}' REPROVADA.")
         print("   Motivos:")
-        for m in motivos:
-            print(f"   • {m}")
+        for motivo_cadastro in motivos:
+            print(f"   • {motivo_cadastro}")
 
 
 def listar_pecas():
@@ -131,8 +131,8 @@ def listar_pecas():
         print(f"  Total: {len(pecas_aprovadas)} peça(s)\n")
         print(f"{'ID':<12} {'Peso (g)':<10} {'Cor':<10} {'Comp. (cm)':<12}")
         print("-" * 44)
-        for p in pecas_aprovadas:
-            print(f"{p['id']:<12} {p['peso']:<10.1f} {p['cor']:<10} {p['comprimento']:<12.1f}")
+        for peca_listada_aprovada in pecas_aprovadas:
+            print(f"{peca_listada_aprovada['id']:<12} {peca_listada_aprovada['peso']:<10.1f} {peca_listada_aprovada['cor']:<10} {peca_listada_aprovada['comprimento']:<12.1f}")
     else:
         print("Nenhuma peça aprovada até o momento.")
 
@@ -142,12 +142,12 @@ def listar_pecas():
 
     if pecas_reprovadas:
         print(f"  Total: {len(pecas_reprovadas)} peça(s)\n")
-        for item in pecas_reprovadas:
-            p = item["peca"]
-            print(f"\nID: {p['id']}  |  Peso: {p['peso']}g  |  Cor: {p['cor']}  |  Comp.: {p['comprimento']}cm")
+        for registro_listado in pecas_reprovadas:
+            dados_peca_listada = registro_listado["peca"]
+            print(f"\nID: {dados_peca_listada['id']}  |  Peso: {dados_peca_listada['peso']}g  |  Cor: {dados_peca_listada['cor']}  |  Comp.: {dados_peca_listada['comprimento']}cm")
             print("  Motivos da reprovação:")
-            for m in item["motivos"]:
-                print(f"    • {m}")
+            for motivo_listagem in registro_listado["motivos"]:
+                print(f"    • {motivo_listagem}")
     else:
         print("Nenhuma peça reprovada até o momento.")
 
@@ -164,21 +164,21 @@ def remover_peca():
         return
 
     # Procurar nas aprovadas
-    for i, p in enumerate(pecas_aprovadas):
-        if p["id"] == id_peca:
-            pecas_aprovadas.pop(i)
+    for indice_remover_aprovada, peca_remover_aprovada in enumerate(pecas_aprovadas):
+        if peca_remover_aprovada["id"] == id_peca:
+            pecas_aprovadas.pop(indice_remover_aprovada)
             # Remover também da caixa atual (se ainda estiver lá)
-            for j, pc in enumerate(caixa_atual):
-                if pc["id"] == id_peca:
-                    caixa_atual.pop(j)
+            for indice_remover_caixa_atual, peca_remover_caixa_atual in enumerate(caixa_atual):
+                if peca_remover_caixa_atual["id"] == id_peca:
+                    caixa_atual.pop(indice_remover_caixa_atual)
                     break
             print(f"Peça aprovada '{id_peca}' removida com sucesso.")
             return
 
     # Procurar nas reprovadas
-    for i, item in enumerate(pecas_reprovadas):
-        if item["peca"]["id"] == id_peca:
-            pecas_reprovadas.pop(i)
+    for indice_remover_reprovada, registro_remover in enumerate(pecas_reprovadas):
+        if registro_remover["peca"]["id"] == id_peca:
+            pecas_reprovadas.pop(indice_remover_reprovada)
             print(f"Peça reprovada '{id_peca}' removida com sucesso.")
             return
 
@@ -193,12 +193,12 @@ def listar_caixas_fechadas():
     print("=" * 50)
 
     if caixas_fechadas:
-        for i, caixa in enumerate(caixas_fechadas, start=1):
-            print(f"\n Caixa #{i} — {len(caixa)} peças:")
+        for numero_caixa_fechada, caixa in enumerate(caixas_fechadas, start=1):
+            print(f"\n Caixa #{numero_caixa_fechada} — {len(caixa)} peças:")
             print(f"  {'ID':<12} {'Peso (g)':<10} {'Cor':<10} {'Comp. (cm)':<12}")
             print(f"  {'-' * 44}")
-            for p in caixa:
-                print(f"  {p['id']:<12} {p['peso']:<10.1f} {p['cor']:<10} {p['comprimento']:<12.1f}")
+            for peca_em_caixa_fechada in caixa:
+                print(f"  {peca_em_caixa_fechada['id']:<12} {peca_em_caixa_fechada['peso']:<10.1f} {peca_em_caixa_fechada['cor']:<10} {peca_em_caixa_fechada['comprimento']:<12.1f}")
     else:
         print("Nenhuma caixa fechada até o momento.")
 
@@ -232,11 +232,11 @@ def gerar_relatorio():
 
     if pecas_reprovadas:
         print("\n  ─── Detalhamento das reprovações ───")
-        for item in pecas_reprovadas:
-            p = item["peca"]
-            print(f"\n  ID: {p['id']}  |  Peso: {p['peso']}g  |  Cor: {p['cor']}  |  Comp.: {p['comprimento']}cm")
-            for m in item["motivos"]:
-                print(f"    • {m}")
+        for registro_remover in pecas_reprovadas:
+            dados_peca_relatorio = registro_remover["peca"]
+            print(f"\n  ID: {dados_peca_relatorio['id']}  |  Peso: {dados_peca_relatorio['peso']}g  |  Cor: {dados_peca_relatorio['cor']}  |  Comp.: {dados_peca_relatorio['comprimento']}cm")
+            for motivo_relatorio in registro_remover["motivos"]:
+                print(f"    • {motivo_relatorio}")
 
     print("\n" + "=" * 60)
 
@@ -286,15 +286,3 @@ def main():
 if __name__ == "__main__":
     main()
     
-    
-    
-    
-# ───────       VARIÁVEIS DE LOOP (letras curtas usadas dentro de for)     ────────
-#
-#  p         → Representa uma peça durante o loop (atalho para "peça")
-#  m         → Representa um motivo de reprovação durante o loop (atalho para "motivo")
-#  i         → Índice (posição) do item na lista durante o loop
-#  j         → Índice (posição) usado no segundo loop (dentro do primeiro)
-#  pc        → Representa uma peça da caixa atual durante o loop (atalho para "peça da caixa")
-#  item      → Representa um registro de peça reprovada (contém a peça e os motivos)
-#  caixa     → Representa uma caixa fechada durante o loop
